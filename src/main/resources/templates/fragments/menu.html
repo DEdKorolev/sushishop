@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+</head>
+<body>
+<table id="nav-menu" width="100%">
+    <tr>
+        <td align="center">
+            <table>
+                <tr>
+                    <td><a th:href="@{/}">Главная страница</a></td>
+                    <td><a th:href="@{/products}">Меню</a></td>
+<!--                    <td sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')"><a th:href="@{/users}">Пользователи</a></td>-->
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')"><a th:href="@{/users}">Пользователи</a></td>
+                    <td sec:authorize="isAuthenticated()"><a th:href="@{/bucket}">Корзина</a></td>
+                </tr>
+            </table>
+        </td>
+        <td align="right">
+            <div sec:authorize="isAuthenticated()">
+                <div>
+                    Приветствую, <a th:href="@{/users/profile}"><span sec:authentication="principal.username">Дмитрий</span></a>
+                </div>
+                <div>
+                    <a th:href="@{/logout}">Выход</a>
+                </div>
+            </div>
+
+            <div sec:authorize="!isAuthenticated()">
+                <div>
+                    Приветствую, незнакомец. Пожалуйста <a th:href="@{/login}">авторизуйся</a>
+                </div>
+            </div>
+        </td>
+
+    </tr>
+</table>
+</body>
+</html>

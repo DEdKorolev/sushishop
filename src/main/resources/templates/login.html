@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница аторизация</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<p th:if="${loginError}" class="error">Неверно введено имя пользователя или пароль</p>
+<form th:action="@{/auth}" method="post">
+    <table border="1">
+        <tr>
+            <td>Имя</td>
+            <td><input type="text" name="username"></td>
+        </tr>
+        <tr>
+            <td>Пароль</td>
+            <td><input type="password" name="password"></td>
+        </tr>
+    </table>
+    <button type="submit">Войти</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню</title>
+    <!--STOMP-->
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+
+    <!--app.js dependance: jquery-->
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/product.js"></script>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<table border="1" align="center" id="table">
+    <tr>
+        <td>Название</td>
+        <td>Цена</td>
+        <td></td>
+    </tr>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.title}">Филадельфия</td>
+        <td th:text="${product.price}">300.0</td>
+        <!--Добавление в корзину пользователя по ID-->
+        <td><a th:href="@{/products/{id}/bucket(id=${product.id})}">Добавить в корзину</a></td>
+    </tr>
+</table>
+
+<form sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" style="text-align: center">
+    <table align="center">
+        <tr>
+            <td>Название</td>
+            <td><input type="text" id="title"></td>
+        </tr>
+        <tr>
+            <td>Цена</td>
+            <td><input type="number" id="price"></td>
+        </tr>
+    </table>
+    <button id="send" type="submit">Добавить в меню</button>
+</form>
+
+</body>
+</html>

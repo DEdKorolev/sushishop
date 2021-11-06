@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<h2>Ваша корзина</h2>
+<h3>Общая сумма -> <b th:text="${bucket.sum}">1000</b></h3>
+
+<table border="1" align="center">
+    <tr>
+        <td>Название</td>
+        <td>Количество</td>
+        <td>Цена</td>
+        <td>Сумма</td>
+        <td></td>
+    </tr>
+    <tr th:each="detail : ${bucket.bucketDetails}">
+        <td th:text="${detail.title}">Cheese</td>
+        <td th:text="${detail.amount}">2</td>
+        <td th:text="${detail.price}">11.0</td>
+        <td th:text="${detail.sum}">22</td>
+<!--        <td><a class="btn btn-danger" th:href="@{/products/{id}/bucket(id=${product.id})">Удалить</a></td>-->
+<!--        <td><a href="#">Удалить</a></td>-->
+        <td><a th:href="@{/products/{username}/bucket(id=${product.username})}">Добавить в корзину</a></td>
+    </tr>
+</table>
+
+<form th:action="@{/bucket}" method="post">
+    <button type="submit">Отправить заказ</button>
+</form>
+
+</body>
+</html>
