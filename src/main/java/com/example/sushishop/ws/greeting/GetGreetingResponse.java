@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="greeting" type="{http://polozov.com/springeshop/ws/greeting}greeting"/>
+ *         &lt;element name="greeting" type="{http://example.com/sushishop/ws/greeting}greeting"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

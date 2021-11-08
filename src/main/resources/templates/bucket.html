@@ -11,6 +11,7 @@
 
 <table border="1" align="center">
     <tr>
+        <td>ID</td>
         <td>Название</td>
         <td>Количество</td>
         <td>Цена</td>
@@ -18,13 +19,15 @@
         <td></td>
     </tr>
     <tr th:each="detail : ${bucket.bucketDetails}">
-        <td th:text="${detail.title}">Cheese</td>
+        <td th:text="${detail.productId}">2</td>
+        <td th:text="${detail.title}">Филадельфия</td>
         <td th:text="${detail.amount}">2</td>
-        <td th:text="${detail.price}">11.0</td>
-        <td th:text="${detail.sum}">22</td>
+        <td th:text="${detail.price}">250.0</td>
+        <td th:text="${detail.sum}">500</td>
 <!--        <td><a class="btn btn-danger" th:href="@{/products/{id}/bucket(id=${product.id})">Удалить</a></td>-->
 <!--        <td><a href="#">Удалить</a></td>-->
-        <td><a th:href="@{/products/{username}/bucket(id=${product.username})}">Добавить в корзину</a></td>
+<!--        <td><a th:href="@{/products/{id}/bucket(id=${product.id})}">Добавить в корзину</a></td>-->
+        <td><a th:href="@{/{productId}/delete(productId=${detail.productId})}">Удалить</a></td>
     </tr>
 </table>
 

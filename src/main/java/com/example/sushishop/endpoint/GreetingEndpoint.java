@@ -15,7 +15,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 @Endpoint
 public class GreetingEndpoint {
 
-	public static final String NAMESPACE_URL = "http://qwerty.com/sushishop/ws/greeting";
+	public static final String NAMESPACE_URL = "http://example.com/sushishop/ws/greeting";
 
 	private GreetingService greetingService;
 

@@ -1,13 +1,11 @@
 package com.example.sushishop.controllers;
 
 import com.example.sushishop.dto.BucketDto;
+import com.example.sushishop.dto.BucketDetailDto;
 import com.example.sushishop.service.BucketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.security.Principal;
@@ -39,6 +37,14 @@ public class BucketController {
 		if(principal != null){
 			bucketService.commitBucketToOrder(principal.getName());
 		}
+		return "redirect:/bucket";
+	}
+
+	@GetMapping("/{productId}/delete")
+	public String deleteProduct(@PathVariable Long productId) {
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!");
+		bucketService.deleteBucketProduct(productId);
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&");
 		return "redirect:/bucket";
 	}
 

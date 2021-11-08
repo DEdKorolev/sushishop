@@ -124,6 +124,10 @@ public class BucketServiceImpl implements BucketService {
 		bucketRepository.save(bucket);
 	}
 
+	@Override
+	public void deleteBucketProduct(Long productId) {
+		bucketRepository.deleteById(productId);
+	}
 //	@Override
 //	public void deleteProduct(Long id) {
 //
