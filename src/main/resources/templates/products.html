@@ -24,6 +24,8 @@
         <td th:text="${product.title}">Филадельфия</td>
         <td th:text="${product.price}">300.0</td>
         <!--Добавление в корзину пользователя по ID-->
+<!--        <td> <button id="toBucket" th:value="${product.id}" name="Add to bucket"-->
+<!--                     type="button" onclick="sendToBucket(value)">Добавить в корзину</button></td>-->
         <td><a th:href="@{/products/{id}/bucket(id=${product.id})}">Добавить в корзину</a></td>
     </tr>
 </table>
@@ -39,7 +41,7 @@
             <td><input type="number" id="price"></td>
         </tr>
     </table>
-    <button id="send" type="submit">Добавить в меню</button>
+    <button id="send" type="submit">Добавить</button>
 </form>
 
 </body>

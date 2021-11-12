@@ -1,6 +1,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:tns="http://qwerty.com/sushishop/ws/greeting"
-           targetNamespace="http://qwerty.com/sushishop/ws/greeting"
+           xmlns:tns="http://example.com/sushishop/ws/greeting"
+           targetNamespace="http://example.com/sushishop/ws/greeting"
            elementFormDefault="qualified">
     <xs:element name="getGreetingRequest">
         <xs:complexType>

@@ -33,30 +33,35 @@ public class BucketServiceImpl implements BucketService {
 		this.orderService = orderService;
 	}
 
+	// Создание корзины
 	@Override
 	@javax.transaction.Transactional
 	public Bucket createBucket(User user, List<Long> productIds) {
 		Bucket bucket = new Bucket();
-		bucket.setUser(user);
+		bucket.setUser(user); // Добавление к корзине юзера
+		// Список продуктов в корзине данного пользователя
 		List<Product> productList = getCollectRefProductsByIds(productIds);
 		bucket.setProducts(productList);
 		return bucketRepository.save(bucket);
 	}
 
+	// Формирования списка продуктов
 	private List<Product> getCollectRefProductsByIds(List<Long> productIds) {
 		return productIds.stream()
+				// getOne вытаскивает ссылку на объект и обращается к начинке объекта, findByID вытаскивает сам объект (использовать избыточно)
 				.map(productRepository::getOne)
 				.collect(Collectors.toList());
 	}
 
+	// Добавление продуктов в корзину по ID
 	@Override
 	@javax.transaction.Transactional
 	public void addProducts(Bucket bucket, List<Long> productIds) {
 		List<Product> products = bucket.getProducts();
 		List<Product> newProductsList = products == null ? new ArrayList<>() : new ArrayList<>(products);
 		newProductsList.addAll(getCollectRefProductsByIds(productIds));
-		bucket.setProducts(newProductsList);
-		bucketRepository.save(bucket);
+		bucket.setProducts(newProductsList); // Список продуктов добавляем в корзину
+		bucketRepository.save(bucket); // Сохранение корзины в репозиторий
 	}
 
 	//Метод подсчёта количества товара в корзине.
@@ -125,12 +130,25 @@ public class BucketServiceImpl implements BucketService {
 	}
 
 	@Override
-	public void deleteBucketProduct(Long productId) {
-		bucketRepository.deleteById(productId);
+	public void deleteProduct(Bucket bucket, Long productId) {
+		List<Product> products = bucket.getProducts();
+		products.remove(products.stream()
+				.filter(product -> productId.equals(product.getId()))
+				.findAny()
+				.orElse(null));
+		bucket.setProducts(products);
+		bucketRepository.save(bucket);
 	}
+
 //	@Override
-//	public void deleteProduct(Long id) {
+//	public void deleteBucketProduct(Long id) {
+//		bucketRepository.deleteById(id);
+//	}
 //
+//	@Override
+//	public long getBucket(Long id) {
+//		productRepository.getById(id);
+//		return 0;
 //	}
 
 }

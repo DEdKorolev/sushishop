@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
-<h2>Ваша корзина</h2>
+<h2>Ваша корзина -> <b>1000</b></h2>
 <h3>Общая сумма -> <b th:text="${bucket.sum}">1000</b></h3>
 
 <table border="1" align="center">
@@ -24,10 +24,7 @@
         <td th:text="${detail.amount}">2</td>
         <td th:text="${detail.price}">250.0</td>
         <td th:text="${detail.sum}">500</td>
-<!--        <td><a class="btn btn-danger" th:href="@{/products/{id}/bucket(id=${product.id})">Удалить</a></td>-->
-<!--        <td><a href="#">Удалить</a></td>-->
-<!--        <td><a th:href="@{/products/{id}/bucket(id=${product.id})}">Добавить в корзину</a></td>-->
-        <td><a th:href="@{/{productId}/delete(productId=${detail.productId})}">Удалить</a></td>
+        <td><a th:href="@{/bucket/{id}/delete(id=${detail.productId})}">Удалить</a></td>
     </tr>
 </table>
 

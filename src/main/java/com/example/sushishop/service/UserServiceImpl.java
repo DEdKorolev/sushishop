@@ -62,18 +62,21 @@ public class UserServiceImpl implements UserService {
 	public void updateProfile(UserDto dto) {
 		User savedUser = userRepository.findFirstByName(dto.getUsername());
 		if(savedUser == null){
-			throw new RuntimeException("User not found by name " + dto.getUsername());
+			throw new RuntimeException("Пользователь с именем " + dto.getUsername() + " не найден.");
 		}
 
 		boolean changed = false;
+		// Проверка на совпадение текущего пароля с новым
 		if(dto.getPassword() != null && !dto.getPassword().isEmpty()){
 			savedUser.setPassword(passwordEncoder.encode(dto.getPassword()));
 			changed = true;
 		}
+		// Проверка на совпадение текущего email с новым
 		if(!Objects.equals(dto.getEmail(), savedUser.getEmail())){
 			savedUser.setEmail(dto.getEmail());
 			changed = true;
 		}
+		// Произвести сохранение данных о пользователе, если были произведены изменения
 		if(changed){
 			userRepository.save(savedUser);
 		}
@@ -93,7 +96,7 @@ public class UserServiceImpl implements UserService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findFirstByName(username);
 		if(user == null){
-			throw new UsernameNotFoundException("User not found with name: " + username);
+			throw new UsernameNotFoundException("Пользователь с именем " + username + " не найден.");
 		}
 
 		List<GrantedAuthority> roles = new ArrayList<>();

@@ -3,9 +3,14 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+#    defer-datasource-initialization: true
   datasource:
     url: jdbc:postgresql://localhost:5432/shop
     username: root
     password: root
+#    driver-class-name: org.postgresql.Driver
   flyway:
     baseline-on-migrate: true
+#  sql:
+#    init:
+#      mode: always

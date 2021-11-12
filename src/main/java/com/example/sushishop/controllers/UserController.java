@@ -58,12 +58,14 @@ public class UserController {
 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/profile")
+	// Класс Principal - авторизованный юзер с т.з. springsec
 	public String profileUser(Model model, Principal principal){
 		if(principal == null){
-			throw new RuntimeException("You are not authorize");
+			throw new RuntimeException("Вы не авторизованы"); // Вывод сообщения, если юзер не авторизован
 		}
-		User user = userService.findByName(principal.getName());
+		User user = userService.findByName(principal.getName()); // Поиск юзера по имени
 
+		// Если имя найдено строится DTO
 		UserDto dto = UserDto.builder()
 				.id(user.getId())
 				.username(user.getName())
@@ -78,8 +80,10 @@ public class UserController {
 	public String updateProfileUser(UserDto dto, Model model, Principal principal){
 		if(principal == null
 				|| !Objects.equals(principal.getName(), dto.getUsername())){
-			throw new RuntimeException("You are not authorize");
+			// Вывод сообщения, если имя не совпадает с DTO, чтобы пользователь не менял имя
+			throw new RuntimeException("Вы не авторизованы");
 		}
+
 		if(dto.getPassword() != null
 				&& !dto.getPassword().isEmpty()
 				&& !Objects.equals(dto.getPassword(), dto.getMatchingPassword())){

@@ -39,13 +39,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@javax.transaction.Transactional
+	@Transactional
 	public void addToUserBucket(Long productId, String username) {
 		User user = userService.findByName(username); // Поиск юзера
 		if(user == null){
-			throw new RuntimeException("User not found. " + username);
+			throw new RuntimeException("Пользователь " + username + " не найден.");
 		}
 
+		// По юзеру ищем корзину
 		Bucket bucket = user.getBucket();
 		if(bucket == null){
 			// Если корзины у юзера нет, то создать
@@ -72,5 +73,11 @@ public class ProductServiceImpl implements ProductService {
 	public ProductDto getById(Long id) {
 		Product product = productRepository.findById(id).orElse(new Product());
 		return ProductMapper.MAPPER.fromProduct(product);
+	}
+
+	@Override
+	@Transactional
+	public void updateUserBucket(String username) {
+		template.convertAndSend("/topic/bucket", bucketService.getBucketByUser(username));
 	}
 }

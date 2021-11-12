@@ -1,5 +1,6 @@
 package com.example.sushishop.dto;
 
+import com.example.sushishop.domain.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class BucketDto {
+	private long id;
 	private long amountProducts;
 	private double sum;
 	private List<BucketDetailDto> bucketDetails = new ArrayList<>();
