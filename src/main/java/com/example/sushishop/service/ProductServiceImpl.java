@@ -80,4 +80,10 @@ public class ProductServiceImpl implements ProductService {
 	public void updateUserBucket(String username) {
 		template.convertAndSend("/topic/bucket", bucketService.getBucketByUser(username));
 	}
+
+	@Override
+	public void deleteProduct(Long id) {
+		productRepository.deleteById(id);
+	}
+
 }

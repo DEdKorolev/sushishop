@@ -77,4 +77,10 @@ public class ProductController {
 		return productService.getById(id);
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@GetMapping("/{id}/delete")
+	public String deleteProduct(@PathVariable Long id) {
+		productService.deleteProduct(id);
+		return "redirect:/products";
+	}
 }

@@ -38,5 +38,6 @@ function renderItem(productJson) {
         "<td>" +product.title +"</td>" +
         "<td>" +product.price +"</td>" +
         "<td><a href='/products/" + product.id +"/bucket'>Добавить в корзину</a></td>" +
+        "<td><a href='/products/" + product.id +"/delete'>Удалить</a></td>" +
         "</tr>");
 }

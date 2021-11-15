@@ -19,6 +19,7 @@
         <td>Название</td>
         <td>Цена</td>
         <td></td>
+        <td></td>
     </tr>
     <tr th:each="product : ${products}">
         <td th:text="${product.title}">Филадельфия</td>
@@ -27,6 +28,7 @@
 <!--        <td> <button id="toBucket" th:value="${product.id}" name="Add to bucket"-->
 <!--                     type="button" onclick="sendToBucket(value)">Добавить в корзину</button></td>-->
         <td><a th:href="@{/products/{id}/bucket(id=${product.id})}">Добавить в корзину</a></td>
+        <td><a th:href="@{/products/{id}/delete(id=${product.id})}">Удалить</a></td>
     </tr>
 </table>
 
