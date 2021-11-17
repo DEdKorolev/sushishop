@@ -1,5 +1,6 @@
 package com.example.sushishop.dto;
 
+import com.example.sushishop.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,6 @@ public class UserDto {
 	private String password;
 	private String matchingPassword;
 	private String email;
-	private Enum role;
+	private Role role;
 }
 

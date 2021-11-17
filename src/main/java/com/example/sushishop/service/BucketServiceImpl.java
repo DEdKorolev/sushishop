@@ -35,7 +35,7 @@ public class BucketServiceImpl implements BucketService {
 
 	// Создание корзины
 	@Override
-	@javax.transaction.Transactional
+	@Transactional
 	public Bucket createBucket(User user, List<Long> productIds) {
 		Bucket bucket = new Bucket();
 		bucket.setUser(user); // Добавление к корзине юзера
@@ -55,7 +55,7 @@ public class BucketServiceImpl implements BucketService {
 
 	// Добавление продуктов в корзину по ID
 	@Override
-	@javax.transaction.Transactional
+	@Transactional
 	public void addProducts(Bucket bucket, List<Long> productIds) {
 		List<Product> products = bucket.getProducts();
 		List<Product> newProductsList = products == null ? new ArrayList<>() : new ArrayList<>(products);
@@ -98,7 +98,7 @@ public class BucketServiceImpl implements BucketService {
 	public void commitBucketToOrder(String username) {
 		User user = userService.findByName(username);
 		if(user == null){
-			throw new RuntimeException("User is not found");
+			throw new RuntimeException("Пользователь не найден");
 		}
 		Bucket bucket = user.getBucket();
 		if(bucket == null || bucket.getProducts().isEmpty()){
@@ -139,16 +139,4 @@ public class BucketServiceImpl implements BucketService {
 		bucket.setProducts(products);
 		bucketRepository.save(bucket);
 	}
-
-//	@Override
-//	public void deleteBucketProduct(Long id) {
-//		bucketRepository.deleteById(id);
-//	}
-//
-//	@Override
-//	public long getBucket(Long id) {
-//		productRepository.getById(id);
-//		return 0;
-//	}
-
 }

@@ -29,17 +29,11 @@ public class UserController {
 		return "userList";
 	}
 
-	@GetMapping("/newClient")
-	public String newClient(Model model){
-		System.out.println("Called method newClient");
-		model.addAttribute("user", new UserDto());
-		return "user";
-	}
-
-	@GetMapping("/newUser")
+	@GetMapping("/new")
 	public String newUser(Model model){
 		System.out.println("Called method newUser");
 		model.addAttribute("user", new UserDto());
+		System.out.println("user" + "++++++++++++++++++");
 		return "user";
 	}
 
@@ -52,26 +46,22 @@ public class UserController {
 		return byName.getRole().name();
 	}
 
-	@PostMapping("/newClient")
-	public String saveClient(UserDto dto, Model model){
-		if(userService.saveClient(dto)){
-			return "redirect:/login";
-		}
-		else {
-			model.addAttribute("user", dto);
-			return "user";
-		}
-	}
+	@PostMapping("/new")
+	public String saveUser(UserDto dto, Model model, Principal principal){
 
-	@PostMapping("/newUser")
-	public String saveUser(UserDto dto, Model model){
-		if(userService.saveUser(dto)){
-			return "redirect:/users";
+		if(userService.save(dto)) {
+			if (principal == null) {
+				return "redirect:/login";
+			}
+			if (principal.getName().equals("admin")) {
+				return "redirect:/users";
+			}
 		}
 		else {
 			model.addAttribute("user", dto);
 			return "user";
 		}
+		return null;
 	}
 
 	@PreAuthorize("isAuthenticated()")

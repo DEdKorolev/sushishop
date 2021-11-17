@@ -35,36 +35,39 @@ public class UserServiceImpl implements UserService {
 				.collect(Collectors.toList());
 	}
 
-	@Override
-	@Transactional
-	public boolean saveClient(UserDto userDto) {
-		if(!Objects.equals(userDto.getPassword(), userDto.getMatchingPassword())){
-			throw new RuntimeException("Password is not equal");
-		}
-		User user = User.builder()
-				.id(userDto.getId())
-				.name(userDto.getUsername())
-				.password(passwordEncoder.encode(userDto.getPassword()))
-				.email(userDto.getEmail())
-				.role(Role.CLIENT)
-				.build();
-		userRepository.save(user);
-		return true;
-	}
+//	@Override
+//	@Transactional
+//	public boolean save(UserDto userDto) {
+//		if(!Objects.equals(userDto.getPassword(), userDto.getMatchingPassword())){
+//			throw new RuntimeException("Password is not equal");
+//		}
+//		User user = User.builder()
+//				.id(userDto.getId())
+//				.name(userDto.getUsername())
+//				.password(passwordEncoder.encode(userDto.getPassword()))
+//				.email(userDto.getEmail())
+//				.role(Role.CLIENT)
+//				.build();
+//		userRepository.save(user);
+//		return true;
+//	}
 
 	@Override
 	@Transactional
-	public boolean saveUser(UserDto userDto) {
+	public boolean save(UserDto userDto) {
 		if(!Objects.equals(userDto.getPassword(), userDto.getMatchingPassword())){
-			throw new RuntimeException("Password is not equal");
+			throw new RuntimeException("Пароли не совпадают");
 		}
 		User user = User.builder()
-				.id(userDto.getId())
-				.name(userDto.getUsername())
-				.password(passwordEncoder.encode(userDto.getPassword()))
-				.email(userDto.getEmail())
-				.role((Role) userDto.getRole())
-				.build();
+			.id(userDto.getId())
+			.name(userDto.getUsername())
+			.password(passwordEncoder.encode(userDto.getPassword()))
+			.email(userDto.getEmail())
+			.role(userDto.getRole())
+			.build();
+		if (userDto.getRole() == null) {
+			user.setRole(Role.CLIENT);
+		}
 		userRepository.save(user);
 		return true;
 	}

@@ -30,9 +30,7 @@
             <div sec:authorize="!isAuthenticated()">
                 <div>
                     Приветствую, незнакомец. Пожалуйста <a th:href="@{/login}">авторизуйся</a>
-                </div>
-                </div>
-                    или <a th:href="@{/users/newClient}">зарегистрируйся</a>
+                    или <a th:href="@{/users/new}">зарегистрируйся</a>
                 </div>
             </div>
         </td>
