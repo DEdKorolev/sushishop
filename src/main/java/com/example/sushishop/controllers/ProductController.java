@@ -3,7 +3,7 @@ package com.example.sushishop.controllers;
 import com.example.sushishop.dto.ProductDto;
 import com.example.sushishop.dto.UserDto;
 import com.example.sushishop.service.ProductService;
-import com.example.sushishop.service.SessionObjectHolder;
+//import com.example.sushishop.service.SessionObjectHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,17 +20,16 @@ import java.util.List;
 public class ProductController {
 
 	private final ProductService productService;
-	private final SessionObjectHolder sessionObjectHolder;
+//	private final SessionObjectHolder sessionObjectHolder;
 
-	public ProductController(ProductService productService, SessionObjectHolder sessionObjectHolder) {
+	public ProductController(ProductService productService) {
 		this.productService = productService;
-		this.sessionObjectHolder = sessionObjectHolder;
 	}
 
 	// Во вьюху products передаем список продуктов
 	@GetMapping
 	public String list(Model model){
-		sessionObjectHolder.addClick();
+//		sessionObjectHolder.addClick();
 		List<ProductDto> list = productService.getAll();
 		model.addAttribute("products", list);
 		return "products";
@@ -50,7 +49,7 @@ public class ProductController {
 	// Метод, который добавляет продукты в корзину по id корзины
 	@GetMapping("/{id}/bucket")
 	public String addBucket(@PathVariable Long id, Principal principal){
-		sessionObjectHolder.addClick();
+//		sessionObjectHolder.addClick();
 		if(principal == null){
 			return "redirect:/products";
 		}

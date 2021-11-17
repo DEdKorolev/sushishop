@@ -11,7 +11,6 @@
 
 <table border="1" align="center">
     <tr>
-        <td>ID</td>
         <td>Название</td>
         <td>Количество</td>
         <td>Цена</td>
@@ -19,7 +18,6 @@
         <td></td>
     </tr>
     <tr th:each="detail : ${bucket.bucketDetails}">
-        <td th:text="${detail.productId}">2</td>
         <td th:text="${detail.title}">Филадельфия</td>
         <td th:text="${detail.amount}">2</td>
         <td th:text="${detail.price}">250.0</td>

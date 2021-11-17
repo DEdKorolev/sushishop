@@ -12,16 +12,18 @@
         <td>ID</td>
         <td>Имя</td>
         <td>Email</td>
+        <td>Роль</td>
         <td></td>
     </tr>
     <tr th:each="user : ${users}">
         <td th:text="${user.id}">Тестовый ID</td>
         <td th:text="${user.username}">Тестовое имя</td>
         <td th:text="${user.email}">Тестовый email</td>
+        <td th:text="${user.role}">Тестовая роль</td>
         <td><a th:href="@{/users/{id}/delete(id=${user.id})}">Удалить</a></td>
     </tr>
 </table>
-<a th:href="@{/users/new}">Добавить нового пользователя</a>
+<a th:href="@{/users/newUser}">Добавить нового пользователя</a>
 
 </body>
 </html>

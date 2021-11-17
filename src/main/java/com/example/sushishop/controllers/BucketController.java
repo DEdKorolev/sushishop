@@ -6,6 +6,7 @@ import com.example.sushishop.dto.BucketDetailDto;
 import com.example.sushishop.service.BucketService;
 import com.example.sushishop.service.ProductService;
 import com.example.sushishop.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @Controller
+@PreAuthorize("isAuthenticated()")
 public class BucketController {
 
 	private final BucketService bucketService;
@@ -56,34 +58,5 @@ public class BucketController {
 		return "redirect:/bucket";
 	}
 
-//	@GetMapping("/{id}/delete")
-//	public String deleteProduct(@PathVariable Long id) {
-//		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-//		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-//		bucketService.deleteBucketProduct(id);
-//		return "redirect:/bucket";
-//	}
-
-//	@GetMapping("/delete/{id}")
-//	public String delBucket(@PathVariable Long id){
-//		return "redirect:/bucket";
-//	}
-
-//	@RequestMapping("/{id}/bucket/delete_product")
-//	public String deleteBucket(@PathVariable Long id, Principal principal) {
-//		sessionObjectHolder.
-//	}
-
-//	@GetMapping("/deleteProduct")
-//	public String deleteProduct(@RequestParam Long id) {
-//		bucketService.deleteById(id);
-//		return "redirect:/bucket";
-//	}
-
-//	@GetMapping("/deleteProduct")
-//	public String deleteProduct(Principal principal) {
-//		bucketService.deleteById(Long id);
-//		return "redirect:/bucket";
-//	}
 }
 

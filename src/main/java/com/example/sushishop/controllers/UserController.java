@@ -13,6 +13,7 @@ import java.security.Principal;
 import java.util.Objects;
 
 @Controller
+//@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping("/users")
 public class UserController {
 
@@ -28,8 +29,14 @@ public class UserController {
 		return "userList";
 	}
 
-	@PreAuthorize("hasAuthority('ADMIN')")
-	@GetMapping("/new")
+	@GetMapping("/newClient")
+	public String newClient(Model model){
+		System.out.println("Called method newClient");
+		model.addAttribute("user", new UserDto());
+		return "user";
+	}
+
+	@GetMapping("/newUser")
 	public String newUser(Model model){
 		System.out.println("Called method newUser");
 		model.addAttribute("user", new UserDto());
@@ -45,9 +52,20 @@ public class UserController {
 		return byName.getRole().name();
 	}
 
-	@PostMapping("/new")
+	@PostMapping("/newClient")
+	public String saveClient(UserDto dto, Model model){
+		if(userService.saveClient(dto)){
+			return "redirect:/login";
+		}
+		else {
+			model.addAttribute("user", dto);
+			return "user";
+		}
+	}
+
+	@PostMapping("/newUser")
 	public String saveUser(UserDto dto, Model model){
-		if(userService.save(dto)){
+		if(userService.saveUser(dto)){
 			return "redirect:/users";
 		}
 		else {
@@ -70,6 +88,7 @@ public class UserController {
 				.id(user.getId())
 				.username(user.getName())
 				.email(user.getEmail())
+				.role(user.getRole())
 				.build();
 		model.addAttribute("user", dto);
 		return "profile";
@@ -95,7 +114,7 @@ public class UserController {
 		return "redirect:/users/profile";
 	}
 
-	@PreAuthorize("hasAuthority('ADMIN')")
+//	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/{id}/delete")
 	public String deleteUser(@PathVariable Long id) {
 		userService.delete(id);

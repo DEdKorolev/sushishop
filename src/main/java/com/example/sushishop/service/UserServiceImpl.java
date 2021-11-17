@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@javax.transaction.Transactional
-	public boolean save(UserDto userDto) {
+	@Transactional
+	public boolean saveClient(UserDto userDto) {
 		if(!Objects.equals(userDto.getPassword(), userDto.getMatchingPassword())){
 			throw new RuntimeException("Password is not equal");
 		}
@@ -47,6 +47,23 @@ public class UserServiceImpl implements UserService {
 				.password(passwordEncoder.encode(userDto.getPassword()))
 				.email(userDto.getEmail())
 				.role(Role.CLIENT)
+				.build();
+		userRepository.save(user);
+		return true;
+	}
+
+	@Override
+	@Transactional
+	public boolean saveUser(UserDto userDto) {
+		if(!Objects.equals(userDto.getPassword(), userDto.getMatchingPassword())){
+			throw new RuntimeException("Password is not equal");
+		}
+		User user = User.builder()
+				.id(userDto.getId())
+				.name(userDto.getUsername())
+				.password(passwordEncoder.encode(userDto.getPassword()))
+				.email(userDto.getEmail())
+				.role((Role) userDto.getRole())
 				.build();
 		userRepository.save(user);
 		return true;
@@ -113,6 +130,7 @@ public class UserServiceImpl implements UserService {
 				.id(user.getId())
 				.username(user.getName())
 				.email(user.getEmail())
+				.role(user.getRole())
 				.build();
 	}
 
