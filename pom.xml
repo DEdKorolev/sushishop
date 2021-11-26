@@ -101,6 +101,7 @@
             <version>1.4.2.Final</version>
         </dependency>
 
+        <!--Подключение веб-сокетов-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
@@ -110,11 +111,13 @@
             <artifactId>sockjs-client</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <!-- Для обмена stomp-сообщениями-->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>stomp-websocket</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <!-- Для связки бэкенда с фронтендом-->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
