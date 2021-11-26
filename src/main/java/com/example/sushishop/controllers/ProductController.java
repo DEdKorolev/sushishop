@@ -20,7 +20,6 @@ import java.util.List;
 public class ProductController {
 
 	private final ProductService productService;
-//	private final SessionObjectHolder sessionObjectHolder;
 
 	public ProductController(ProductService productService) {
 		this.productService = productService;
@@ -29,7 +28,7 @@ public class ProductController {
 	// Во вьюху products передаем список продуктов
 	@GetMapping
 	public String list(Model model){
-//		sessionObjectHolder.addClick();
+		System.out.println("Вызван метод list. Переход на вкладку \"Меню\".");
 		List<ProductDto> list = productService.getAll();
 		model.addAttribute("products", list);
 		return "products";
@@ -37,7 +36,7 @@ public class ProductController {
 
 //	@GetMapping
 //	public String list(Model model, Principal principal) {
-//		sessionObjectHolder.addClick();
+//		System.out.println("Вызван метод list");
 //		List<ProductDto> list = productService.getAll();
 //		model.addAttribute("products", list);
 //		if (principal != null) {
@@ -49,7 +48,7 @@ public class ProductController {
 	// Метод, который добавляет продукты в корзину по id корзины
 	@GetMapping("/{id}/bucket")
 	public String addBucket(@PathVariable Long id, Principal principal){
-//		sessionObjectHolder.addClick();
+		System.out.println("Вызван метод addBucket");
 		if(principal == null){
 			return "redirect:/products";
 		}
@@ -61,24 +60,28 @@ public class ProductController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Void> addProduct(ProductDto dto){
+		System.out.println("Вызван метод addProduct");
 		productService.addProduct(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@MessageMapping("/products")
 	public void messageAddProduct(ProductDto dto){
+		System.out.println("Вызван метод messageAddProduct");
 		productService.addProduct(dto);
 	}
 
 	@GetMapping("/{id}")
 	@ResponseBody
 	public ProductDto getById(@PathVariable Long id){
+		System.out.println("Вызван метод getById");
 		return productService.getById(id);
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/{id}/delete")
-	public String deleteProduct(@PathVariable Long id) {
+	public String deleteProductFromMenu(@PathVariable Long id) {
+		System.out.println("Вызван метод deleteProductFromMenu");
 		productService.deleteProduct(id);
 		return "redirect:/products";
 	}

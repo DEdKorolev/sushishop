@@ -30,34 +30,31 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserDto> getAll() {
+		System.out.println("Вызван метод getAll");
 		return userRepository.findAll().stream()
 				.map(this::toDto)
 				.collect(Collectors.toList());
 	}
 
-//	@Override
-//	@Transactional
-//	public boolean save(UserDto userDto) {
-//		if(!Objects.equals(userDto.getPassword(), userDto.getMatchingPassword())){
-//			throw new RuntimeException("Password is not equal");
-//		}
-//		User user = User.builder()
-//				.id(userDto.getId())
-//				.name(userDto.getUsername())
-//				.password(passwordEncoder.encode(userDto.getPassword()))
-//				.email(userDto.getEmail())
-//				.role(Role.CLIENT)
-//				.build();
-//		userRepository.save(user);
-//		return true;
-//	}
-
 	@Override
 	@Transactional
 	public boolean save(UserDto userDto) {
+		System.out.println("Вызван метод save");
 		if(!Objects.equals(userDto.getPassword(), userDto.getMatchingPassword())){
-			throw new RuntimeException("Пароли не совпадают");
+			System.out.println("Пароль и подтверждение пароля не совпадают");
+			throw new RuntimeException("Пароль и подтверждение пароля не совпадают");
 		}
+
+		if(userRepository.findFirstByName(userDto.getUsername()) != null){
+			System.out.println("Пользователь с таким именем уже существует");
+			throw new RuntimeException("Пользователь с таким именем уже существует. Введите другое имя.");
+		}
+
+		if(userRepository.findFirstByEmail(userDto.getEmail()) != null){
+			System.out.println("Пользователь с таким Email уже существует");
+			throw new RuntimeException("Пользователь с таким Email уже существует. Для регистрации выберите другой Email.");
+		}
+		// Создание нового пользователя
 		User user = User.builder()
 			.id(userDto.getId())
 			.name(userDto.getUsername())
@@ -69,17 +66,20 @@ public class UserServiceImpl implements UserService {
 			user.setRole(Role.CLIENT);
 		}
 		userRepository.save(user);
+		System.out.println("Пользователь сохранён в репозиторий");
 		return true;
 	}
 
 	@Override
 	public User findByName(String name) {
+		System.out.println("Вызван метод findByName. Поиск пользователя по имени в репозитории");
 		return userRepository.findFirstByName(name);
 	}
 
 	@Override
 	@Transactional
 	public void updateProfile(UserDto dto) {
+		System.out.println("Вызван метод updateProfile");
 		User savedUser = userRepository.findFirstByName(dto.getUsername());
 		if(savedUser == null){
 			throw new RuntimeException("Пользователь с именем " + dto.getUsername() + " не найден.");
@@ -104,18 +104,22 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void save(User user) {
+		System.out.println("Вызван метод save1");
 		userRepository.save(user);
 	}
 
 	@Override
 	public void delete(Long id) {
+		System.out.println("Вызван метод delete. Пользователь удалён из репозитория.");
 		userRepository.deleteById(id);
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("Вызван метод loadUserByUsername. Загрузка данных пользователя по его имени.");
 		User user = userRepository.findFirstByName(username);
 		if(user == null){
+			System.out.println("Пользователь с именем " + username + " не найден.");
 			throw new UsernameNotFoundException("Пользователь с именем " + username + " не найден.");
 		}
 
@@ -129,6 +133,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private UserDto toDto(User user){
+		System.out.println("Вызван метод toDto");
 		return UserDto.builder()
 				.id(user.getId())
 				.username(user.getName())

@@ -3,7 +3,6 @@ package com.example.sushishop.controllers;
 import com.example.sushishop.domain.User;
 import com.example.sushishop.dto.UserDto;
 import com.example.sushishop.service.UserService;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +12,6 @@ import java.security.Principal;
 import java.util.Objects;
 
 @Controller
-//@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping("/users")
 public class UserController {
 
@@ -25,39 +23,30 @@ public class UserController {
 
 	@GetMapping
 	public String userList(Model model){
+		System.out.println("Вызван метод userList");
 		model.addAttribute("users", userService.getAll());
 		return "userList";
 	}
 
 	@GetMapping("/new")
 	public String newUser(Model model){
-		System.out.println("Called method newUser");
+		System.out.println("Вызван метод newUser. Переход на форму регистрации.");
 		model.addAttribute("user", new UserDto());
-		System.out.println("user" + "++++++++++++++++++");
 		return "user";
-	}
-
-	@PostAuthorize("isAuthenticated() and #username == authentication.principal.username")
-	@GetMapping("/{name}/roles")
-	@ResponseBody
-	public String getRoles(@PathVariable("name") String username){
-		System.out.println("Called method getRoles");
-		User byName = userService.findByName(username);
-		return byName.getRole().name();
 	}
 
 	@PostMapping("/new")
 	public String saveUser(UserDto dto, Model model, Principal principal){
-
+		System.out.println("Вызван метод saveUser. Производится сохранение пользователя");
 		if(userService.save(dto)) {
+			System.out.println(dto.getRole());
 			if (principal == null) {
 				return "redirect:/login";
 			}
-			if (principal.getName().equals("admin")) {
+			if (dto.getRole().toString() == "ADMIN") {
 				return "redirect:/users";
 			}
-		}
-		else {
+		} else {
 			model.addAttribute("user", dto);
 			return "user";
 		}
@@ -68,10 +57,11 @@ public class UserController {
 	@GetMapping("/profile")
 	// Класс Principal - авторизованный юзер с т.з. springsec
 	public String profileUser(Model model, Principal principal){
+		System.out.println("Вызван метод profileUser. Переход на страницу профиля пользователя.");
 		if(principal == null){
 			throw new RuntimeException("Вы не авторизованы"); // Вывод сообщения, если юзер не авторизован
 		}
-		User user = userService.findByName(principal.getName()); // Поиск юзера по имени
+		User user = userService.findByName(principal.getName()); // Поиск пользователя по имени
 
 		// Если имя найдено строится DTO
 		UserDto dto = UserDto.builder()
@@ -87,6 +77,7 @@ public class UserController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/profile")
 	public String updateProfileUser(UserDto dto, Model model, Principal principal){
+		System.out.println("Вызван метод updateProfileUser");
 		if(principal == null
 				|| !Objects.equals(principal.getName(), dto.getUsername())){
 			// Вывод сообщения, если имя не совпадает с DTO, чтобы пользователь не менял имя
@@ -107,6 +98,7 @@ public class UserController {
 //	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/{id}/delete")
 	public String deleteUser(@PathVariable Long id) {
+		System.out.println("Вызван метод deleteUser");
 		userService.delete(id);
 		return "redirect:/users";
 	}

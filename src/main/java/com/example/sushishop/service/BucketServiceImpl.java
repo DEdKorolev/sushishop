@@ -37,6 +37,7 @@ public class BucketServiceImpl implements BucketService {
 	@Override
 	@Transactional
 	public Bucket createBucket(User user, List<Long> productIds) {
+		System.out.println("Вызван метод createBucket");
 		Bucket bucket = new Bucket();
 		bucket.setUser(user); // Добавление к корзине юзера
 		// Список продуктов в корзине данного пользователя
@@ -57,6 +58,7 @@ public class BucketServiceImpl implements BucketService {
 	@Override
 	@Transactional
 	public void addProducts(Bucket bucket, List<Long> productIds) {
+		System.out.println("Вызван метод addProducts");
 		List<Product> products = bucket.getProducts();
 		List<Product> newProductsList = products == null ? new ArrayList<>() : new ArrayList<>(products);
 		newProductsList.addAll(getCollectRefProductsByIds(productIds));
@@ -67,6 +69,7 @@ public class BucketServiceImpl implements BucketService {
 	//Метод подсчёта количества товара в корзине.
 	@Override
 	public BucketDto getBucketByUser(String name) {
+		System.out.println("Вызван метод getBucketByUser");
 		User user = userService.findByName(name);
 		if(user == null || user.getBucket() == null){
 			return new BucketDto();
@@ -96,6 +99,7 @@ public class BucketServiceImpl implements BucketService {
 	@Override
 	@Transactional
 	public void commitBucketToOrder(String username) {
+		System.out.println("Вызван метод commitBucketToOrder");
 		User user = userService.findByName(username);
 		if(user == null){
 			throw new RuntimeException("Пользователь не найден");
@@ -131,6 +135,7 @@ public class BucketServiceImpl implements BucketService {
 
 	@Override
 	public void deleteProduct(Bucket bucket, Long productId) {
+		System.out.println("Вызван метод deleteProduct");
 		List<Product> products = bucket.getProducts();
 		products.remove(products.stream()
 				.filter(product -> productId.equals(product.getId()))

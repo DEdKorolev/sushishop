@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 @Component
 public class GreetingService {
 	public Greeting generateGreeting(String name) throws DatatypeConfigurationException {
+		System.out.println("Вызван метод generateGreeting");
 		Greeting greeting = new Greeting();
 		greeting.setText("Hello, " + name);
 		greeting.setDate(DatatypeFactory.newInstance()

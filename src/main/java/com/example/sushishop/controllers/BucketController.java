@@ -30,6 +30,7 @@ public class BucketController {
 
 	@GetMapping("/bucket")
 	public String aboutBucket(Model model, Principal principal){
+		System.out.println("Вызван метод aboutBucket");
 		if(principal == null){
 			model.addAttribute("bucket", new BucketDto());
 		}
@@ -43,6 +44,7 @@ public class BucketController {
 
 	@PostMapping("/bucket")
 	public String commitBucket(Principal principal){
+		System.out.println("Вызван метод commitBucket");
 		if(principal != null){
 			bucketService.commitBucketToOrder(principal.getName());
 		}
@@ -50,7 +52,8 @@ public class BucketController {
 	}
 
 	@GetMapping("/bucket/{id}/delete")
-	public String pageDeleteFromBucket(@PathVariable Long id, Principal principal) {
+	public String deleteProductFromBucket(@PathVariable Long id, Principal principal) {
+		System.out.println("Вызван метод deleteProductFromBucket");
 		if(principal != null) {
 			bucketService.deleteProduct(userService.findByName(principal.getName()).getBucket(), id);
 			productService.updateUserBucket(principal.getName());

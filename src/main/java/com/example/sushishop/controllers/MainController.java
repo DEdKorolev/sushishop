@@ -11,15 +11,9 @@ import java.util.UUID;
 @Controller
 public class MainController {
 
-//	private final SessionObjectHolder sessionObjectHolder;
-//
-//	public MainController(SessionObjectHolder sessionObjectHolder) {
-//		this.sessionObjectHolder = sessionObjectHolder;
-//	}
-
 	@RequestMapping({"","/"})
 	public String index(Model model, HttpSession httpSession){
-//		model.addAttribute("amountClicks", sessionObjectHolder.getAmountClicks());
+		System.out.println("Вызван метод index. Переход на главную страницу.");
 		if(httpSession.getAttribute("myID") == null){
 			String uuid = UUID.randomUUID().toString();
 			httpSession.setAttribute("myID", uuid);
@@ -32,11 +26,13 @@ public class MainController {
 
 	@RequestMapping("/login")
 	public String login(){
+		System.out.println("Вызван метод login. Переход на форму авторизации.");
 		return "login";
 	}
 
 	@RequestMapping("/login-error")
 	public String loginError(Model model){
+		System.out.println("Вызван метод loginError. Неверно введено имя пользователя или пароль");
 		model.addAttribute("loginError", true);
 		return "login";
 	}

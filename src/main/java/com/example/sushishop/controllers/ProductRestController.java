@@ -17,11 +17,13 @@ public class ProductRestController {
 
     @GetMapping("/{id}")
     public ProductDto getById(@PathVariable Long id){
+        System.out.println("Вызван метод getById");
         return productService.getById(id);
     }
 
     @PostMapping
     public void addProduct(@RequestBody ProductDto dto){
+        System.out.println("Вызван метод addProduct");
         productService.addProduct(dto);
     }
 

@@ -17,7 +17,4 @@ public interface BucketService {
 	void commitBucketToOrder(String username);
 
 	void deleteProduct(Bucket bucket, Long productId);
-//    void deleteBucketProduct(Long id);
-
-//	long getBucket(Long id);
 }

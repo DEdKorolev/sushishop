@@ -41,20 +41,20 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void addToUserBucket(Long productId, String username) {
+		System.out.println("Вызван метод addToUserBucket");
 		User user = userService.findByName(username); // Поиск юзера
 		if(user == null){
 			throw new RuntimeException("Пользователь " + username + " не найден.");
 		}
 
-		// По юзеру ищем корзину
+		// По пользователю ищем корзину
 		Bucket bucket = user.getBucket();
 		if(bucket == null){
-			// Если корзины у юзера нет, то создать
+			// Если корзины у пользователя нет, то создать
 			Bucket newBucket = bucketService.createBucket(user, Collections.singletonList(productId));
-			user.setBucket(newBucket); // Прикрепить корзину к юзеру
+			user.setBucket(newBucket); // Прикрепить корзину к пользователю
 			userService.save(user);
-		}
-		else {
+		} else {
 			bucketService.addProducts(bucket, Collections.singletonList(productId));
 		}
 	}
@@ -62,6 +62,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void addProduct(ProductDto dto) {
+		System.out.println("Вызван метод addProduct");
 		Product product = mapper.toProduct(dto);
 		Product savedProduct = productRepository.save(product);
 
@@ -71,6 +72,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductDto getById(Long id) {
+		System.out.println("Вызван метод getById");
 		Product product = productRepository.findById(id).orElse(new Product());
 		return ProductMapper.MAPPER.fromProduct(product);
 	}
@@ -78,11 +80,13 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void updateUserBucket(String username) {
+		System.out.println("Вызван метод updateUserBucket");
 		template.convertAndSend("/topic/bucket", bucketService.getBucketByUser(username));
 	}
 
 	@Override
 	public void deleteProduct(Long id) {
+		System.out.println("Вызван метод deleteProduct");
 		productRepository.deleteById(id);
 	}
 

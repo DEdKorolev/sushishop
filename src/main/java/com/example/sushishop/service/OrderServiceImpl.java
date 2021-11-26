@@ -25,11 +25,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void saveOrder(Order order) {
+        System.out.println("Вызван метод saveOrder");
         Order savedOrder = orderRepository.save(order);
         sendIntegrationNotify(savedOrder);
     }
 
     private void sendIntegrationNotify(Order order){
+        System.out.println("Вызван метод sendIntegrationNotify");
         OrderIntegrationDto dto = new OrderIntegrationDto();
         dto.setUsername(order.getUser().getName());
         dto.setAddress(order.getAddress());
@@ -47,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrder(Long id) {
+        System.out.println("Вызван метод getOrder");
         return orderRepository.findById(id).orElse(null);
     }
 }
