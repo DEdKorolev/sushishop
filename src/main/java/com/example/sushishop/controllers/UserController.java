@@ -4,6 +4,8 @@ import com.example.sushishop.domain.User;
 import com.example.sushishop.dto.UserDto;
 import com.example.sushishop.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,14 +38,15 @@ public class UserController {
 	}
 
 	@PostMapping("/new")
-	public String saveUser(UserDto dto, Model model, Principal principal){
+	public String saveUser(UserDto dto, Model model){
 		System.out.println("Вызван метод saveUser. Производится сохранение пользователя");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(auth.getAuthorities());
 		if(userService.save(dto)) {
-			System.out.println(dto.getRole());
-			if (principal == null) {
+			if (auth.getAuthorities().toString() != "[ADMIN]") {
 				return "redirect:/login";
 			}
-			if (dto.getRole().toString() == "ADMIN") {
+			if (auth.getAuthorities().toString() == "[ADMIN]") {
 				return "redirect:/users";
 			}
 		} else {
@@ -55,7 +58,6 @@ public class UserController {
 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/profile")
-	// Класс Principal - авторизованный юзер с т.з. springsec
 	public String profileUser(Model model, Principal principal){
 		System.out.println("Вызван метод profileUser. Переход на страницу профиля пользователя.");
 		if(principal == null){
@@ -68,6 +70,7 @@ public class UserController {
 				.id(user.getId())
 				.username(user.getName())
 				.email(user.getEmail())
+				.address(user.getAddress())
 				.role(user.getRole())
 				.build();
 		model.addAttribute("user", dto);
@@ -95,7 +98,7 @@ public class UserController {
 		return "redirect:/users/profile";
 	}
 
-//	@PreAuthorize("hasAuthority('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/{id}/delete")
 	public String deleteUser(@PathVariable Long id) {
 		System.out.println("Вызван метод deleteUser");

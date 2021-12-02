@@ -25,6 +25,10 @@
             <td>Email</td>
             <td><input th:type="email" th:maxlength="30" th:field="*{email}"></td>
         </tr>
+        <tr>
+            <td>Адрес</td>
+            <td><input th:type="text" th:maxlength="30" th:field="*{address}"></td>
+        </tr>
         <tr sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')">
             <td>Роль</td>
             <td>

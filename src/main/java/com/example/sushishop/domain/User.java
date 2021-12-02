@@ -21,7 +21,7 @@ public class User {
     private String name;
     private String password;
     private String email;
-    private boolean archive;
+    private String address;
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)

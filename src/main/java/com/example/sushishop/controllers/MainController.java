@@ -1,6 +1,5 @@
 package com.example.sushishop.controllers;
 
-//import com.example.sushishop.service.SessionObjectHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -63,6 +63,7 @@ public class BucketServiceImpl implements BucketService {
 		List<Product> newProductsList = products == null ? new ArrayList<>() : new ArrayList<>(products);
 		newProductsList.addAll(getCollectRefProductsByIds(productIds));
 		bucket.setProducts(newProductsList); // Список продуктов добавляем в корзину
+		System.out.println("Продукт" + getCollectRefProductsByIds(productIds) + "добален в корзину");
 		bucketRepository.save(bucket); // Сохранение корзины в репозиторий
 	}
 
@@ -126,7 +127,7 @@ public class BucketServiceImpl implements BucketService {
 
 		order.setDetails(orderDetails);
 		order.setSum(total);
-		order.setAddress("none");
+		order.setAddress(user.getAddress());
 
 		orderService.saveOrder(order);
 		bucket.getProducts().clear();

@@ -12,6 +12,7 @@
         <td>ID</td>
         <td>Имя</td>
         <td>Email</td>
+        <td>Адрес</td>
         <td>Роль</td>
         <td></td>
     </tr>
@@ -19,6 +20,7 @@
         <td th:text="${user.id}">Тестовый ID</td>
         <td th:text="${user.username}">Тестовое имя</td>
         <td th:text="${user.email}">Тестовый email</td>
+        <td th:text="${user.address}">Тестовый адрес</td>
         <td th:text="${user.role}">Тестовая роль</td>
         <td><a th:href="@{/users/{id}/delete(id=${user.id})}">Удалить</a></td>
     </tr>

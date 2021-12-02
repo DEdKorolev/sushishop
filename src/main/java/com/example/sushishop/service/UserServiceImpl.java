@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
 			.name(userDto.getUsername())
 			.password(passwordEncoder.encode(userDto.getPassword()))
 			.email(userDto.getEmail())
+			.address(userDto.getAddress())
 			.role(userDto.getRole())
 			.build();
 		if (userDto.getRole() == null) {
@@ -138,6 +139,7 @@ public class UserServiceImpl implements UserService {
 				.id(user.getId())
 				.username(user.getName())
 				.email(user.getEmail())
+				.address(user.getAddress())
 				.role(user.getRole())
 				.build();
 	}

@@ -24,9 +24,6 @@
     <tr th:each="product : ${products}">
         <td th:text="${product.title}">Филадельфия</td>
         <td th:text="${product.price}">300.0</td>
-        <!--Добавление в корзину пользователя по ID-->
-<!--        <td> <button id="toBucket" th:value="${product.id}" name="Add to bucket"-->
-<!--                     type="button" onclick="sendToBucket(value)">Добавить в корзину</button></td>-->
         <td sec:authorize="isAuthenticated()"><a th:href="@{/products/{id}/bucket(id=${product.id})}">Добавить в корзину</a></td>
         <td sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')"><a th:href="@{/products/{id}/delete(id=${product.id})}">Удалить</a></td>
     </tr>

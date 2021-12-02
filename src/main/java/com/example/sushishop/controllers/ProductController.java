@@ -1,9 +1,7 @@
 package com.example.sushishop.controllers;
 
 import com.example.sushishop.dto.ProductDto;
-import com.example.sushishop.dto.UserDto;
 import com.example.sushishop.service.ProductService;
-//import com.example.sushishop.service.SessionObjectHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -33,17 +31,6 @@ public class ProductController {
 		model.addAttribute("products", list);
 		return "products";
 	}
-
-//	@GetMapping
-//	public String list(Model model, Principal principal) {
-//		System.out.println("Вызван метод list");
-//		List<ProductDto> list = productService.getAll();
-//		model.addAttribute("products", list);
-//		if (principal != null) {
-//			productService.updateUserBucket(principal.getName());
-//		}
-//		return "products";
-//	}
 
 	// Метод, который добавляет продукты в корзину по id корзины
 	@GetMapping("/{id}/bucket")
