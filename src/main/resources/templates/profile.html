@@ -12,19 +12,19 @@
     <table border="1">
         <tr>
             <td>Имя</td>
-            <td><input type="text" th:field="*{username}"/></td>
+            <td><input th:type="text" th:maxlength="30" th:field="*{username}"/></td>
         </tr>
         <tr>
             <td>Email</td>
-            <td><input type="email" th:field="*{email}"/></td>
+            <td><input th:type="email" th:maxlength="30" th:field="*{email}"/></td>
         </tr>
         <tr>
             <td>Пароль</td>
-            <td><input type="password" th:field="*{password}"/></td>
+            <td><input type="password" th:maxlength="30" th:field="*{password}"/></td>
         </tr>
         <tr>
             <td>Повтор пароля</td>
-            <td><input type="password" th:field="*{matchingPassword}"/></td>
+            <td><input type="password" th:maxlength="30" th:field="*{matchingPassword}"/></td>
         </tr>
     </table>
     <button type="submit">Сохранить</button>
