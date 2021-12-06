@@ -1,6 +1,5 @@
 package com.example.sushishop.endpoint;
 
-import com.example.sushishop.config.WebServiceConfig;
 import com.example.sushishop.service.GreetingService;
 import com.example.sushishop.ws.greeting.GetGreetingRequest;
 import com.example.sushishop.ws.greeting.GetGreetingResponse;
@@ -24,8 +23,9 @@ public class GreetingEndpoint {
 		this.greetingService = greetingService;
 	}
 
+	// Как RequestMapping
 	@PayloadRoot(namespace = NAMESPACE_URL, localPart = "getGreetingRequest")
-	@ResponsePayload
+	@ResponsePayload // Полезная нагрузка
 	public GetGreetingResponse getGreeting(@RequestPayload GetGreetingRequest request)
 			throws DatatypeConfigurationException {
 		GetGreetingResponse response = new GetGreetingResponse();

@@ -17,6 +17,7 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 public class WebServiceConfig {
 
+	// Регистрация точки в контектсе, где будут находиться веб-сервисы
 	@Bean
 	public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {
 		MessageDispatcherServlet servlet = new MessageDispatcherServlet();
@@ -25,6 +26,7 @@ public class WebServiceConfig {
 		return new ServletRegistrationBean(servlet, "/ws/*");
 	}
 
+	//Бины для связки запроса с сервисом greeting
 	@Bean(name = "greeting")
 	public DefaultWsdl11Definition defaultWsdl11Definition() {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
@@ -35,6 +37,7 @@ public class WebServiceConfig {
 		return wsdl11Definition;
 	}
 
+	// Связка с xsd схемой
 	@Bean("greetingSchema")
 	public XsdSchema xsdGreetingSchema() {
 		return new SimpleXsdSchema(new ClassPathResource("ws/greeting.xsd"));
