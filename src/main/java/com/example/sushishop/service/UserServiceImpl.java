@@ -94,9 +94,19 @@ public class UserServiceImpl implements UserService {
 		}
 		// Проверка на совпадение текущего email с новым
 		if(!Objects.equals(dto.getEmail(), savedUser.getEmail())){
+			if(userRepository.findFirstByEmail(dto.getEmail()) != null){
+				throw new RuntimeException("Пользователь с таким Email уже существует. Выберите другой Email.");
+			}
 			savedUser.setEmail(dto.getEmail());
 			changed = true;
 		}
+
+		// Проверка на совпадение текущего адреса с новым
+		if(!Objects.equals(dto.getAddress(), savedUser.getAddress())){
+			savedUser.setAddress(dto.getAddress());
+			changed = true;
+		}
+
 		// Произвести сохранение данных о пользователе, если были произведены изменения
 		if(changed){
 			userRepository.save(savedUser);
