@@ -10,15 +10,7 @@
     http://www.springframework.org/schema/integration/http
     http://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
 
-    <int:channel id="invokeCallGetProducts"/>
-
-    <int:channel id="newsChannel"/>
-
     <int:channel id="ordersChannel"/>
-
-    <int:channel id="get_products_channel">
-        <int:queue capacity='10' />
-    </int:channel>
 
     <int-http:inbound-channel-adapter id="httpOrders" channel="ordersChannel"
                                       supported-methods="POST"

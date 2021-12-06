@@ -20,7 +20,7 @@ public class OrderActivator {
 
     @ServiceActivator(inputChannel = "ordersChannel")
     public void listenOrdersChannel(@Payload Order payload, @Headers Map<String,Object> headers){
-        System.out.println("Get order in message: " + payload);
+        System.out.println("Получен заказ: " + payload);
         orderService.save(payload);
     }
 }

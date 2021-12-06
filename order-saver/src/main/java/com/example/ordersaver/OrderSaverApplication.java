@@ -11,7 +11,7 @@ import java.util.Collections;
 @IntegrationComponentScan
 public class OrderSaverApplication {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         SpringApplication app = new SpringApplication(OrderSaverApplication.class);
         app.setDefaultProperties(Collections.singletonMap("server.port", "8090"));
         ConfigurableApplicationContext context = app.run(args);
